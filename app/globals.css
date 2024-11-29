@@ -349,7 +349,7 @@
     @apply aspect-square w-10 rounded-full object-cover !important;
   }
   .mobile-nav {
-    @apply h5 flex-1 gap-1 text-brand !important;
+    @apply h5 flex-none gap-1 text-brand !important;
   }
   .mobile-nav-list {
     @apply flex flex-1 flex-col gap-4 !important;
