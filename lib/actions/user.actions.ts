@@ -16,7 +16,7 @@ import { cookies } from "next/headers";
 import { avatarPlaceholderUrl } from "@/constants";
 import { redirect } from "next/navigation";
 
-const handleError = (error: unknown, message: string) => {
+const handleError = async (error: unknown, message: string) => {
   console.log(error, message);
   throw error;
 };

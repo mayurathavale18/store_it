@@ -15,18 +15,19 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { signOutUser } from "@/lib/actions/user.actions";
+import FileUploader from "@/components/FileUploader";
 
 interface Props {
   email: string;
   fullName: string;
   avatar: string;
-  ownerId: string;
+  $id: string;
   accountId: string;
 }
 
 const MobileNavigation = ({
-  ownerId,
-  accountd,
+  $id: ownerId,
+  accountId,
   email,
   fullName,
   avatar,
@@ -98,7 +99,7 @@ const MobileNavigation = ({
           </nav>
           <Separator className="my-5 bg-light-200/20" />
           <div className="flex flex-1 flex-col justify-between gap-5">
-            FileUploader
+            <FileUploader ownerId={ownerId} accountId={accountId} />
             <Button
               type="submit"
               className="sign-out-button"

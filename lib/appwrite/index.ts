@@ -15,6 +15,7 @@ export const createSessionClient = async () => {
 
   if (!session || !session.value) {
     // redirect("/sign-in");
+
     throw new Error("No Session");
   }
 

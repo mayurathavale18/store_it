@@ -67,6 +67,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           : await signInUser({ email: values.email });
 
       if (!user.accountId) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         window.confirm(
           `User with email : ${values.email} does not exist. Do you want to Sign-Up?`,
         )
