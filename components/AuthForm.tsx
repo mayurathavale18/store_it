@@ -17,8 +17,9 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { createAccount } from "@/lib/actions/user.actions";
+import { createAccount, signInUser } from "@/lib/actions/user.actions";
 import OtpModal from "@/components/OtpModal";
+import { useRouter } from "next/navigation";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -33,6 +34,7 @@ const authFormSchema = (formType: FormType) => {
 };
 
 const AuthForm = ({ type }: { type: FormType }) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [accountId, setAccountId] = useState(null);
@@ -45,15 +47,32 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   });
 
+  const setUserNotFoundError = (email: string) => {
+    setErrorMessage(
+      `No user with email ${email} exists. Please Sign Up to continue`,
+    );
+    setTimeout(() => setErrorMessage(""), 3000);
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     setErrorMessage("");
-    console.log(values);
     try {
-      const user = await createAccount({
-        fullName: values.fullName || "",
-        email: values.email,
-      });
+      const user =
+        type === "sign-up"
+          ? await createAccount({
+              fullName: values.fullName || "",
+              email: values.email,
+            })
+          : await signInUser({ email: values.email });
+
+      if (!user.accountId) {
+        window.confirm(
+          `User with email : ${values.email} does not exist. Do you want to Sign-Up?`,
+        )
+          ? router.push("/sign-up")
+          : setUserNotFoundError(values.email);
+      }
       setAccountId(user.accountId);
     } catch {
       setErrorMessage("Failed to create account, Please try again.");

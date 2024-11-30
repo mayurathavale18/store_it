@@ -3,19 +3,18 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { SeparatorHorizontal } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { navItems } from "@/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { signOutUser } from "@/lib/actions/user.actions";
 
 interface Props {
   email: string;
@@ -103,7 +102,7 @@ const MobileNavigation = ({
             <Button
               type="submit"
               className="sign-out-button"
-              onClick={() => {}}
+              onClick={async () => await signOutUser()}
             >
               <Image
                 src="/assets/icons/logout.svg"

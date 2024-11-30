@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const currentUser = await getCurrentUser();
-
+  console.log("called", currentUser);
   if (!currentUser) return redirect("/sign-in");
 
   return (
